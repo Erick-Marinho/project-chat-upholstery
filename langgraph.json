@@ -1,0 +1,24 @@
+{
+  "dependencies": [
+    "."
+  ],
+  "graphs": {
+    "agent": {
+      "path": "app.application.agent.scheduling_agent_builder:get_scheduling_agent",
+      "config_schema": {
+        "type": "object",
+        "properties": {
+          "configurable": {
+            "type": "object",
+            "properties": {
+              "thread_id": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "env": ".env"
+}

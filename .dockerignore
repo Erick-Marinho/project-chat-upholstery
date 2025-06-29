@@ -1,0 +1,103 @@
+# ==================== DESENVOLVIMENTO ====================
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# ==================== PYTHON ====================
+
+# Virtual environments
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==================== ALEMBIC ====================
+
+# Arquivos de migração (são gerados no container)
+alembic/versions/*.py
+!alembic/versions/.gitkeep
+
+# ==================== DOCKER ====================
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# ==================== DADOS LOCAIS ====================
+
+# Database data
+postgres_data/
+pgadmin_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+log/
+
+# ==================== IDE E OS ====================
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==================== CACHE E TEMP ====================
+
+# Cache
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Temporary
+*.tmp
+*.temp
+*.bak
+*.backup
