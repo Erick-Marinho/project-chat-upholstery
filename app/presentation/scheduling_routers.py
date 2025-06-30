@@ -34,7 +34,7 @@ async def receive_webhook(
 
 @router.post("/debug/truncate-tables")
 async def truncate_langgraph_tables():
-    """🗑️ Limpa todas as tabelas do LangGraph"""
+    """Limpa todas as tabelas do LangGraph"""
     try:
         postgres_uri = (
             f"postgresql://"
@@ -64,14 +64,14 @@ async def truncate_langgraph_tables():
                     try:
                         async with conn.cursor() as cursor:
                             await cursor.execute(f"TRUNCATE TABLE {table} RESTART IDENTITY CASCADE")
-                        logger.info(f"✅ {table} truncada")
+                        logger.info(f"{table} truncada")
                     except Exception as e:
-                        logger.warning(f"⚠️ Erro ao truncar {table}: {e}")
+                        logger.warning(f"Erro ao truncar {table}: {e}")
                 
                 return {"status": "success", "message": "Tabelas LangGraph limpas"}
         finally:
             await pool.close()
             
     except Exception as e:
-        logger.error(f"❌ Erro: {e}")
+        logger.error(f"Erro: {e}")
         raise HTTPException(status_code=500, detail=str(e))

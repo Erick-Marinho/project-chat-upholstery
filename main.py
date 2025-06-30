@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Agendamento API",
-    description="API para agendamento de serviços",
+    description="API para atendimento de clientes - chat-upholstery",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
@@ -43,7 +43,7 @@ app.include_router(message_routers, prefix="/message", tags=["message"])
 @app.get("/", summary="Verifica se o servidor está online")
 async def root():
     return {
-        "status": "API FastAPI está online",
+        "status": "API FastAPI online - chat-upholstery",
         "version": app.version,
         "docs": "/docs",
     }

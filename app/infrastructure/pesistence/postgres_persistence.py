@@ -65,7 +65,7 @@ class DatabaseManager:
         logger.info("Iniciando a inicialização do banco de dados para o LangGraph...")
         await self._setup_langgraph_tables()
         await self._setup_store_tables()
-        logger.info("✅ Inicialização do banco de dados do LangGraph concluída.")
+        logger.info("Inicialização do banco de dados do LangGraph concluída.")
 
     async def _setup_langgraph_tables(self):
         """
@@ -77,12 +77,12 @@ class DatabaseManager:
                 setup_checkpointer = AsyncPostgresSaver(conn)
                 await setup_checkpointer.setup()
                 
-            logger.info("✅ Tabelas do LangGraph (checkpoints) verificadas/criadas com sucesso.")
-            logger.info("  📝 checkpoints")
-            logger.info("  📝 checkpoint_writes")
+            logger.info("Tabelas do LangGraph (checkpoints) verificadas/criadas com sucesso.")
+            logger.info("checkpoints")
+            logger.info("checkpoint_writes")
             
         except Exception as e:
-            logger.error(f"❌ Erro no setup das tabelas do LangGraph: {e}")
+            logger.error(f"Erro no setup das tabelas do LangGraph: {e}")
             raise
 
     async def _setup_store_tables(self):
@@ -95,11 +95,11 @@ class DatabaseManager:
                 setup_store = AsyncPostgresStore(conn)
                 await setup_store.setup()
                 
-            logger.info("✅ Tabelas do BaseStore verificadas/criadas com sucesso.")
-            logger.info("  💾 BaseStore REAL ativado!")
+            logger.info("Tabelas do BaseStore verificadas/criadas com sucesso.")
+            logger.info("BaseStore REAL ativado!")
             
         except Exception as e:
-            logger.error(f"❌ Erro no setup das tabelas do BaseStore: {e}")
+            logger.error(f"Erro no setup das tabelas do BaseStore: {e}")
             raise
 
     async def get_checkpointer(self) -> AsyncPostgresSaver:

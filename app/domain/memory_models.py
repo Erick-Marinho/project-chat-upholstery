@@ -3,7 +3,7 @@ from typing import Optional
 import uuid
 
 from sqlalchemy import JSON, TIMESTAMP, String, UUID, ForeignKey, Integer, TEXT, BOOLEAN
-# from sqlalchemy.dialects.postgresql import VECTOR  # Comentado temporariamente
+# from sqlalchemy.dialects.postgresql import VECTOR  # TODO: Implementar vector storage
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.infrastructure.database.database_session import Base
