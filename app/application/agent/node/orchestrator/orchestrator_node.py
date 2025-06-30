@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
         description="Nó principal de orquestração que interage como LLM"
 )
 
-
 async def orchestrator_node(state: SchedulingAgentState) -> SchedulingAgentState:
     """
     Nó orquestrador que interage como LLM e utiliza o BaseStore para persistir dados.
@@ -32,7 +31,7 @@ async def orchestrator_node(state: SchedulingAgentState) -> SchedulingAgentState
         store = await get_store()
         
         # Teste: salvar dados do usuário
-        await store.put(
+        await store.aput(
             namespace=["users"], 
             key=phone_number, 
             value={
@@ -43,7 +42,7 @@ async def orchestrator_node(state: SchedulingAgentState) -> SchedulingAgentState
         )
         
         # Teste: recuperar dados
-        user_data = await store.get(namespace=["users"], key=phone_number)
+        user_data = await store.aget(namespace=["users"], key=phone_number)
         if user_data:
             print(f"BaseStore funcionando! Dados do usuário: {user_data.value}")
         else:
@@ -53,7 +52,7 @@ async def orchestrator_node(state: SchedulingAgentState) -> SchedulingAgentState
         print(f"Erro no BaseStore: {e}")
     
     llm_service = LLMFactory.create_llm_service("openai")
-    llm_response = llm_service.orchestrator_prompt_template(last_message)
+    llm_response = await llm_service.orchestrator_prompt_template(last_message)
     
     ai_message = AIMessage(content=llm_response.content)
     

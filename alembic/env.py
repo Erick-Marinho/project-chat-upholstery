@@ -1,5 +1,6 @@
 import os
 import sys
+import asyncio
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
@@ -21,7 +22,17 @@ config.set_main_option("sqlalchemy.url", DATABASE_URL_SYNC)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+    try:
+        # Verifica se há um loop de eventos em execução (contexto async)
+        loop = asyncio.get_running_loop()
+        # Se há um loop, executa a operação de I/O em uma thread separada
+        # para evitar bloquear o event loop
+        asyncio.create_task(
+            asyncio.to_thread(fileConfig, config.config_file_name)
+        )
+    except RuntimeError:
+        # Não há loop de eventos em execução, seguro usar chamada síncrona
+        fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support

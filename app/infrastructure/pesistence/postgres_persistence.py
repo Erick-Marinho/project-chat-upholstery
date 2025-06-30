@@ -8,10 +8,25 @@ from app.infrastructure.config.config import settings
 logger = logging.getLogger(__name__)
 
 # URI PostgreSQL
+def _get_database_host() -> str:
+    """
+    Detecta automaticamente o host do banco baseado no ambiente:
+    - Se está rodando no Docker: usa 'db'
+    - Se está rodando localmente: usa 'localhost'
+    """
+    import socket
+    try:
+        socket.gethostbyname('db')
+        return 'db'  # Está dentro da rede Docker
+    except socket.gaierror:
+        return 'localhost'  # Está rodando localmente
+
+DB_HOST = _get_database_host()
+
 postgres_uri = (
     f"postgresql://"
     f"{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD.get_secret_value()}"
-    f"@db:5432/{settings.POSTGRES_DB}"
+    f"@{DB_HOST}:5432/{settings.POSTGRES_DB}"
 )
 
 class DatabaseManager:
