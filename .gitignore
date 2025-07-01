@@ -61,3 +61,6 @@ pgadmin_data/
 *.tmp
 *.temp
 .cache/
+
+# instructions
+plan
