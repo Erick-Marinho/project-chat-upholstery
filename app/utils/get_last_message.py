@@ -20,4 +20,4 @@ def get_last_message(state: SchedulingAgentState) -> Optional[BaseMessage]:
     messages = state.get("messages")
     if not messages:
         return None
-    return messages[-1].content.lower().strip()
+    return messages[-1]  # Retorna o objeto BaseMessage completo

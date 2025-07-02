@@ -99,3 +99,54 @@ class SchedulingData(BaseModel):
         if cidade:
             self.cidade = cidade
         self.atualizado_em = datetime.now()
+    
+    def dados_obrigatorios_completos(self) -> bool:
+        """Verifica se todos os dados obrigatórios foram coletados"""
+        dados_cliente = self.cliente
+        dados_servico = self.servico
+        
+        # Dados obrigatórios do cliente
+        cliente_completo = all([
+            dados_cliente.nome_completo,
+            dados_cliente.telefone,
+            dados_cliente.cpf,
+            dados_cliente.email,
+            dados_cliente.endereco_completo
+        ])
+        
+        # Dados obrigatórios do serviço
+        servico_completo = all([
+            dados_servico.item_selecionado,
+            self.cidade,
+            dados_servico.aceito_orcamento is True
+        ])
+        
+        return cliente_completo and servico_completo
+    
+    def dados_faltantes(self) -> list[str]:
+        """Retorna lista de dados que ainda faltam"""
+        faltantes = []
+        
+        if not self.cliente.nome_completo:
+            faltantes.append("Nome completo")
+        if not self.cliente.telefone:
+            faltantes.append("Telefone")
+        if not self.cliente.cpf:
+            faltantes.append("CPF")
+        if not self.cliente.email:
+            faltantes.append("E-mail")
+        if not self.cliente.endereco_completo:
+            faltantes.append("Endereço completo")
+        if not self.cidade:
+            faltantes.append("Cidade")
+        if not self.servico.item_selecionado:
+            faltantes.append("Item para higienização")
+        if self.servico.aceito_orcamento is not True:
+            faltantes.append("Confirmação do orçamento")
+            
+        return faltantes
+    
+    def pode_fazer_transbordo(self) -> bool:
+        """Verifica se pode fazer transbordo para humano"""
+        return (self.etapa_atual == StatusFluxo.CONFIRMACAO_ORCAMENTO and 
+                self.dados_obrigatorios_completos())
