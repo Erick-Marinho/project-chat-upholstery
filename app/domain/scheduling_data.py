@@ -3,30 +3,30 @@ from typing import Optional
 from enum import Enum
 from datetime import datetime
 
-class StatusCliente(str, Enum):
+class StatusClienteERP(str, Enum):
     """Status do cliente no sistema ERP"""
     NOVO = "novo"
-    EXISTENTE = "existente" 
-    BUSCANDO = "buscando"
+    EXISTENTE = "existente"
+    ATUALIZADO = "atualizado"
 
 class StatusFluxo(str, Enum):
     """Etapas do fluxo de atendimento - Yasmin Doutor Sofá"""
     INICIAL = "inicial"
-    IDENTIFICACAO_CLIENTE = "identificacao_cliente"
     IDENTIFICACAO_ITEM = "identificacao_item"
     CAPTACAO_LOCALIZACAO = "captacao_localizacao"
     ORCAMENTO = "orcamento"
     CONFIRMACAO_ORCAMENTO = "confirmacao_orcamento"
+    IDENTIFICACAO_CLIENTE = "identificacao_cliente"
     TRANSBORDO_HUMANO = "transbordo_humano"
 
 class TipoItem(str, Enum):
     """Tipos de itens para higienização"""
     SOFA = "sofá"
-    POLTRONA = "poltrona" 
     CADEIRA = "cadeira"
     COLCHAO = "colchão"
     CABECEIRA = "cabeceira"
-    BANCO_CARRO = "banco_carro"
+    POLTRONA = "poltrona"
+    OUTRO = "outro"
 
 class ClienteInfo(BaseModel):
     """Informações do cliente"""
@@ -35,13 +35,14 @@ class ClienteInfo(BaseModel):
     email: Optional[str] = None
     cpf: Optional[str] = None
     endereco_completo: Optional[str] = None
-    status_erp: StatusCliente = StatusCliente.NOVO
+    ponto_referencia: Optional[str] = None
+    status_erp: StatusClienteERP = StatusClienteERP.NOVO
     cliente_id_erp: Optional[str] = None
 
 class ServicoInfo(BaseModel):
     """Informações do serviço solicitado"""
     item_selecionado: Optional[TipoItem] = None
-    quantidade_itens: Optional[int] = 1
+    quantidade_itens: int = 1
     tamanho_item: Optional[str] = None
     foto_enviada: bool = False
     valor_orcamento: Optional[float] = None
@@ -52,7 +53,7 @@ class SchedulingData(BaseModel):
     Dados de atendimento para limpeza de estofados - Doutor Sofá
     """
     
-    # Manter compatibilidade com versão anterior
+    # Nome do usuário
     user_name: Optional[str] = None
     
     # Informações do cliente

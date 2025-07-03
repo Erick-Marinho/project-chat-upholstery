@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Agendamento API",
+    title="API de Atendimento",
     description="API para atendimento de clientes - chat-upholstery",
     version="1.0.0",
     docs_url="/docs",
